@@ -180,7 +180,11 @@ function like_update(id){
     }
   })
 }
-
+const timeout = document.querySelector('.alertdiv');
+  setTimeout( 
+  function () {
+    timeout.style.display = 'none';
+  },5000);
 </script>
 
 </body>

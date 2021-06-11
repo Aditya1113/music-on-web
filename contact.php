@@ -1,6 +1,11 @@
 <?php 
 $page_title='contact us';
+$note=1;
 include ('includes/header.php');
+include ('includes/database.php');
+if(isset($_REQUEST['note'])){
+  $note=$_REQUEST['note'];
+}
 ?>
 <!-- ***** Breadcrumb Area Start ***** -->
 <div class="breadcumb-area bg-img bg-overlay" style="background-image: url(img/bg-img/2.jpg);">
@@ -39,17 +44,23 @@ include ('includes/header.php');
         <div class="col-12 col-md-6">
           <div class="contact-form">
             <div class="contact-heading">
+            <?php if($note =='success'){ ?>
+              <div class="alert alert-success alertdiv" role="alert">
+                <h4 class="text-center">Thank you For contacting us!</h4>
+              </div>
+            <?php } ?>
+            
               <h2>Get In Touch</h2>
               <h5>Don't hesitate to contact us</h5>
             </div>
             <!-- Form -->
-            <form action="#" method="post">
+            <form action="contactform.php" method="post">
               <div class="row">
                 <div class="col-12">
-                  <input type="text" name="message-name" class="form-control mb-30" placeholder="Your Name">
+                  <input type="text" name="name" class="form-control mb-30" placeholder="Your Name">
                 </div>
                 <div class="col-12">
-                  <input type="email" name="message-email" class="form-control mb-30" placeholder="Your Email">
+                  <input type="email" name="email" class="form-control mb-30" placeholder="Your Email">
                 </div>
                 <div class="col-12">
                   <textarea name="message" class="form-control mb-30" placeholder="Your Message"></textarea>
@@ -92,7 +103,5 @@ include ('includes/header.php');
   </section>
   <!-- ***** Newsletter Area End ***** -->
 
-<?php
-include ('includes/footer.php');
+<?php include ("includes/footer.php") 
 ?>
-  
