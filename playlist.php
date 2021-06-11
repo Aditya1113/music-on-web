@@ -1,4 +1,5 @@
 <?php
+$page_title='Your Playlist';
 require_once ('includes/header.php');
 require_once ('includes/database.php');
 $query_str = "SELECT * FROM playlist inner join songs on playlist.song_id=songs.song_id";

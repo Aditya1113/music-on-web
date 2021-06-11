@@ -1,4 +1,5 @@
 <?php 
+$page_title='contact us';
 include ('includes/header.php');
 ?>
 <!-- ***** Breadcrumb Area Start ***** -->
@@ -6,7 +7,7 @@ include ('includes/header.php');
     <div class="container h-100">
       <div class="row h-100 align-items-center">
         <div class="col-12">
-          <h2 class="title mt-70">Signup</h2>
+          <h2 class="title mt-70">Contact Us</h2>
         </div>
       </div>
     </div>

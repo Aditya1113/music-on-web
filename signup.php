@@ -1,6 +1,6 @@
 <?php
 
-$page_title = "Create new user";
+$page_title = "Sign up";
 
 include ('includes/header.php');
 ?>

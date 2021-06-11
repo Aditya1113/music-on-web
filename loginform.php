@@ -1,5 +1,5 @@
 <?php
-$page_title = "Login";
+$page_title = 'Login';
 require_once('includes/header.php');
 /**
  * Description:
@@ -35,7 +35,7 @@ require_once('includes/header.php');
 
                 if ($login_status == 1) {
 
-                    // header("Refresh:2; url=index.php", true, 303);
+                    header("Refresh:2; url=index.php", true, 303);
                     echo "<p class='lead'>You are logged in as <span class='text-success text-uppercase'>", $login, "</span></p>";
                     echo "<a class='btn poca-btn' href='logout.php'>LOG OUT</a><br>";
                    

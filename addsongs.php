@@ -1,4 +1,5 @@
 <?php
+$page_title="Add songs";
 require_once ('includes/header.php');
 ?>
 

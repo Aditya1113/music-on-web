@@ -1,4 +1,5 @@
 <?php
+$page_title='home';
 require_once ('includes/header.php');
 require_once ('includes/database.php');
 

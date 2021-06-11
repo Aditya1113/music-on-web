@@ -1,4 +1,5 @@
-<?php 
+<?php
+$page_title='About us';
 include ('includes/header.php');
 ?>
 
