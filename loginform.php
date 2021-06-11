@@ -71,17 +71,17 @@ require_once('includes/header.php');
             </div>
                 <form class="form-horizontal" role="form" action="login.php" method="post">
                     <div class="form-group">
-                        <div class="col-sm-3 logsign">
+                        <div class="col-md-6 logsign">
                             <input type="text" class="form-control" id="newUserName" name="username" placeholder="Username" required>
                         </div>
                     </div>
                     <div class="form-group">
-                        <div class="col-sm-3 logsign ">
+                        <div class="col-md-6 logsign ">
                             <input type="password" class="form-control" id="newPassword" name="password" placeholder="Password" required>
                         </div>
                     </div>
                     <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-3 logsign">
+                        <div class="col-sm-offset-2 col-md-6 logsign">
                             <button type="submit" class="btn poca-btn">SIGN IN</button>
                         </div>
                     </div>
