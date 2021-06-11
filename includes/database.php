@@ -2,9 +2,9 @@
 	//define parameters
 	$host = "localhost";
 	$port;
-	$login = "id17018274_adi";
-	$password = "Aditya@11132021";
-	$database = "id17018274_music_website";
+	$login = "root";
+	$password = "";
+	$database = "music_database";
 	$tblsongs = "songs";
 	$tblUsers = "users";
 	  

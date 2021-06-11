@@ -202,6 +202,5 @@ else{
     </div>
   </section>
   <!-- ***** Newsletter Area End ***** -->
-  <hr>
   <?php include ('includes/footer.php')?>
   
