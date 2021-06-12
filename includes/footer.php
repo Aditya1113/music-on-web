@@ -185,6 +185,16 @@ const timeout = document.querySelector('.alertdiv');
   function () {
     timeout.style.display = 'none';
   },5000);
+
+document.addEventListener('play', function(e){
+    var audios = document.getElementsByTagName('audio');
+    for(var i = 0, len = audios.length; i < len;i++){
+        if(audios[i] != e.target){
+          audios[i].parentNode.classList.remove('audioplayer-playing');
+            audios[i].pause();
+        }
+    }
+}, true);
 </script>
 
 </body>
