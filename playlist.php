@@ -8,7 +8,18 @@ $result = $conn->query($query_str);
 
 
 ?>
+<style>
+  .hide{
+    display:none;
+  }
 
+.red-color {
+color:red;
+}
+.remove , .add,.like,.unlike{
+  cursor:pointer;
+}
+</style>
   <!-- ***** Breadcrumb Area Start ***** -->
   <div class="breadcumb-area bg-img bg-overlay" style="background-image: url(img/bg-img/2.jpg);">
     <div class="container h-100">
@@ -51,7 +62,22 @@ $result = $conn->query($query_str);
               </div>
               <!-- Likes, Share & Download -->
               <div class="likes-share-download d-flex align-items-center justify-content-between">
-                <a href="#"><i class="fa fa-heart" aria-hidden="true"></i> Like (29)</a>
+                <div>
+                <?php  if ($role == 1 or $role == 2){ 
+                  $query4="SELECT * FROM likes where userid='".$_SESSION['id']."' and songid='".$row1['song_id']."'";
+                  $result4=$conn->query($query4);
+                    if (($result4->num_rows) == 1 ){?>
+                      <span class="unlike fa fa-heart red-color" data-id="<?php echo $row1['song_id'];?>"></span>
+                      <span class="like hide fa fa-heart" data-id="<?php echo $row1['song_id']; ?>"></span>
+                      <?php } else { ?>
+                      <span class="like fa fa-heart" data-id="<?php echo $row1['song_id'];?>"></span>
+                      <span class="unlike hide fa fa-heart red-color" data-id="<?php echo $row1['song_id'];?>"></span>
+                    <?php } ?>
+                    <span class="likes_count"><?php echo $row1['likes'];?> <?php if($row1['likes']==1){
+                    echo "like";} else { echo "likes";}?>
+                  </span>
+                  <?php  } ?>
+                </div>
                 <div>
                 <?php if ($role == 1 or $role == 2){
                       ?>

@@ -22,7 +22,27 @@ if (!$result) {
 
 else{
 ?>
+<style>
+  .hide{
+    display:none;
+  }
 
+.red-color {
+color:red;
+}
+.pointer:hover{
+  cursor: pointer;
+  color:#f55656;
+
+}
+.remove , .add,.like,.unlike{
+  cursor:pointer;
+}
+.remove:hover , .add:hover,.like:hover,.unlike:hover{
+  color:#f55656;
+}
+
+</style>
   <!-- ***** Welcome Area Start ***** -->
   <section class="welcome-area">
     <!-- Welcome Slides -->
@@ -136,20 +156,41 @@ else{
               </div>
               <!-- Likes, Share & Download -->
               <div class="likes-share-download d-flex align-items-center justify-content-between">
-              <a href="javascript:void(0)"><span onclick="like_update('<?php echo $result_row['song_id'];?>')"><i class="fa fa-heart"></i> Likes(<span id="like_loop_<?php echo $result_row['song_id'];?>"><?php echo$result_row['likes'];?></span>)</span>
-                  </a>
+              <div>
+                <?php  if ($role == 1 or $role == 2){ 
+                  $query4="SELECT * FROM likes where userid='".$_SESSION['id']."' and songid='".$result_row['song_id']."'";
+                  $result4=$conn->query($query4);
+                    if (($result4->num_rows) == 1 ){?>
+                      <span class="unlike fa fa-heart red-color" data-id="<?php echo $result_row['song_id'];?>"></span>
+                      <span class="like hide fa fa-heart" data-id="<?php echo $result_row['song_id']; ?>"></span>
+                      <?php } else { ?>
+                      <span class="like fa fa-heart" data-id="<?php echo $result_row['song_id'];?>"></span>
+                      <span class="unlike hide fa fa-heart red-color" data-id="<?php echo $result_row['song_id'];?>"></span>
+                    <?php } ?>
+                    <span class="likes_count"><?php echo $result_row['likes'];?> <?php if($result_row['likes']==1){
+                    echo "like";} else { echo "likes";}?></span>
+                 <?php }
+                    else {?>
+                      <span onclick="user" class="pointer fa fa-heart">&nbsp;<?php echo $result_row['likes'];?> <?php if($result_row['likes']==1){
+                    echo "like";} else { echo "likes";}?></span>
+                    <span class="text text-danger hide" id="non-login"><strong>Please Login first!</strong></span>
+                    <?php } ?>
+                  </div>
                 <div>
-                <?php if ($role == 1 or $role == 2){
+                <?php if ($role == 1 or $role == 2){ 
                   $query3="SELECT * FROM playlist where user_id='".$_SESSION['id']."' and song_id='".$result_row['song_id']."'";
                   $result3=$conn->query($query3);
-                    if($result3->num_rows==1){?>
-                      <span><a href="javascript:void(0)" class="remove" id="<?php echo $result_row['song_id'];?>"><i class="fa fa-trash" aria-hidden="true">Remove</i></a></span>
+                    if(($result3->num_rows)==1){?>
+                      <span class="remove fa fa-trash" data-id="<?php echo $result_row['song_id'];?>">Remove</span>
+                      <span class="add hide fa fa-user-plus" data-id="<?php echo $result_row['song_id'];?>">Add to Playlist</span>
                       <?php } else {?>
-                      <span><a href="javascript:void(0)" class="add" id="<?php echo $result_row['song_id'];?>"><i class="fa fa-user-plus" aria-hidden="true">Add to Playlist</i></a></span>
-                    <?php }                 
-                   }?>
-                  <a href="download.php?id='<?php echo $result_row['song_id'];?>'"><span onclick="download_update('<?php echo $result_row['song_id'];?>')"><i class="fa fa-download"></i> Download(<span id="download_loop_<?php echo $result_row['song_id'];?>"><?php echo$result_row['downloads'];?></span>)</span>
-                  </a>
+                        <span class="add fa fa-user-plus " data-id="<?php echo $result_row['song_id'];?>">Add to Playlist</span>
+                      <span class="remove hide fa fa-trash" data-id="<?php echo $result_row['song_id'];?>">Remove</span>
+                    <?php }} else {?>
+                      <span class="pointer fa fa-user-plus" onclick="non-login()">Add to Playlist</span>
+                      <?php }?>&nbsp;
+                  <span href="download.php?id='<?php echo $result_row['song_id'];?>'" class="pointer fa fa-download">&nbsp;<span onclick="download_update('<?php echo $result_row['song_id'];?>')">Download&nbsp;(<span id="download_loop_<?php echo $result_row['song_id'];?>"><?php echo$result_row['downloads'];?></span>)</span>
+                    </span>
                 </div>
                 <?php if ($role == 1){?>
                 <div>

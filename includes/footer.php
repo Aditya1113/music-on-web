@@ -84,6 +84,7 @@ Copyright ©<script>document.write(new Date().getFullYear());</script>
   <!-- ***** Footer Area End ***** -->
 <!-- ******* All JS ******* -->
   <!-- jQuery js -->
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>        
   <script src="js/jquery.min.js"></script>
   <!-- Popper js -->
@@ -95,44 +96,80 @@ Copyright ©<script>document.write(new Date().getFullYear());</script>
   <!-- Active js -->
   <script src="js/default-assets/active.js"></script>
   <script>
-    document.querySelector(".form-control").blur();
-    var activeclass = document.querySelectorAll('#nav li');
-   for (var i = 0; i < activeclass.length; i++) {
-    activeclass[i].addEventListener('click', activateClass);
-   }
-function activateClass(e) {
-  for (var i = 0; i < activeclass.length; i++) {
-        activeclass[i].classList.remove('current-item');
-    }
-    e.target.classList.add('current-item');
-}
-      
+  
 $(document).ready(function(){
+
+  $('.like').on('click',function(){
+			var song_id = $(this).data('id');
+      $post=$(this);
+      // console.log($post.html());
+     $.ajax({
+        url:'likes.php',
+        type:'post',
+        data:{'liked':1,'id':song_id},
+        success: function(response){
+          console.log(response);
+          if(response==1){ 
+					$post.parent().find('span.likes_count').text(response + " like");}
+          else{
+            $post.parent().find('span.likes_count').text(response + " likes");
+          }					
+          $post.addClass('hide');
+					$post.siblings().removeClass('hide');
+				}
+     });
+  });
+
+  $('.unlike').on('click', function(){
+			var song_id = $(this).data('id');
+      $post=$(this);      
+			$.ajax({
+				url: 'likes.php',
+				type: 'post',
+				data: {
+					'unliked': 1,
+					'id': song_id
+				},
+				success: function(response){
+          if(response==1){
+					$post.parent().find('span.likes_count').text(response + " like");}
+          else{
+            $post.parent().find('span.likes_count').text(response + " likes");
+          }					
+					$post.addClass('hide');
+					$post.siblings().removeClass('hide');
+				}
+      });
+  });
+
+
+
   $('.add').on('click',function(){
-			var songid = $(this).attr('id');
-      $(this).html('<i class="fa fa-trash" aria-hidden="true">Remove</i>');
+			var songid = $(this).data('id');
+      $post=$(this);
      $.ajax({
         url:'playlistprocess.php',
-        type:'get',
+        type:'post',
         data:{'added':1,'id':songid},
-        success:function(){
+        success:function(response){
+          $post.addClass('hide');
+					$post.siblings().removeClass('hide');
         }
      });
   });
   $('.remove').on('click', function(){
-			var songid = $(this).attr('id');
-
-      $(this).html('<i class="fa fa-user-plus" aria-hidden="true">Add to Playlist</i>');
-
-      
+			var songid = $(this).data('id');
+      $post=$(this);
 			$.ajax({
 				url: 'playlistprocess.php',
-				type: 'get',
+				type: 'post',
 				data: {
 					'removed': 1,
 					'id': songid
 				},
-				success: function(){
+				success: function(response){
+          $post.addClass('hide');
+					$post.siblings().removeClass('hide');
         }
       });
   });
@@ -141,7 +178,7 @@ $(document).ready(function(){
     $('#rem'+songid).hide();
 			$.ajax({
 				url: 'playlistprocess.php',
-				type: 'get',
+				type: 'post',
 				data: {
 					'removed': 1,
 					'id': songid
@@ -150,6 +187,9 @@ $(document).ready(function(){
         }
       });
   });
+
+  
+
 });
 
 
@@ -167,19 +207,7 @@ $(document).ready(function(){
   })
 }
 
-function like_update(id){
-  var like_count=$('#like_loop_'+id).html();
-  like_count++;
-  $('#like_loop_'+id).html(like_count);
-  $.ajax({
-    url:'likes.php',
-    type:'get',
-    data:'id='+id,
-    success:function(){
 
-    }
-  })
-}
 const timeout = document.querySelector('.alertdiv');
   setTimeout( 
   function () {
@@ -195,6 +223,13 @@ document.addEventListener('play', function(e){
         }
     }
 }, true);
+
+function user(){
+  setTimeout(() => {
+    document.querySelector('#non-login').classList.remove('hide');
+    
+  }, 3000);
+}
 </script>
 
 </body>

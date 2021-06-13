@@ -6,33 +6,56 @@
  */
 $page_title = "like a song";
 
-require_once ('includes/header.php');
+session_start();
+
 require_once ('includes/database.php');
 
-//retrieve user id from a querystring
-$song_id = $_GET['id'];
 
-$query_str = "SELECT * FROM songs WHERE song_id = $song_id";
-//execut the query
-$result = $conn->query($query_str);
-$row1=$result->fetch_assoc();
 
-if (!$result) {
-    $errno = $conn->errno;
-    $errmsg = $conn->error;
-    echo "Selection failed with: ($errno) $errmsg<br/>\n";
-    $conn->close();
-    exit;
-  }
-$newCount = $row1['likes'] + 1;
-$updatQuery= "UPDATE songs SET likes = $newCount WHERE song_id =$song_id";
-$conn->query($updatQuery);
-exit;
+  if(isset($_POST['liked'])){
+
+    $song_id = $_POST['id'];
+    $user_id=$_SESSION['id'];
+    $query_str = "SELECT * FROM songs WHERE song_id = $song_id";
+    $result = $conn->query($query_str);
+    $row1=$result->fetch_assoc();
+    $newCount = $row1['likes']+1;
+    $updatQuery= "UPDATE songs SET likes = $newCount WHERE song_id =$song_id";
+    $conn->query($updatQuery);
+    
+    $query_str="INSERT INTO likes(userid,songid) values('$user_id','$song_id')";
+    $conn->query($query_str);
+    echo $newCount;
+    exit();
+    
+    }
+    if(isset($_POST['unliked'])){
+
+        $song_id = $_POST['id'];
+        $user_id=$_SESSION['id'];
+        $query_str = "SELECT * FROM songs WHERE song_id = $song_id";
+        $result = $conn->query($query_str);
+        $row1=$result->fetch_assoc();
+        $newCount = $row1['likes']-1;
+
+        $query_str="DELETE FROM likes where userid=$user_id and songid=$song_id";
+        $conn->query($query_str);
+
+        $updatQuery= "UPDATE songs SET likes = $newCount WHERE song_id =$song_id";
+        $conn->query($updatQuery);
+        echo $newCount ;
+        
+        exit();
+        
+        }
+
+
+
 ?>
 
 <?php
 // close the connection.
 $conn->close();
-header("Location:index.php");
+// header("Location:counts.php");
 include ('includes/footer.php');
 ?>
